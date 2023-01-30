@@ -1,0 +1,53 @@
+#Arrival
+0.1351037191292486: ArrivalDemand(S, T) - ArrivalDemand(S, T_Lag1) + 0.0 * Lag2(T, T_Lag1) = 0.0 ^2
+0.0579932815033599: ArrivalDemand(S, T) - ArrivalDemand(S, T_Lag2) + 0.0 * Lag2(T, T_Lag2) = 0.0 ^2
+0.0179938381173542: ArrivalDemand(S, T) + ArrivalDemand(S, T_Lag12) + 0.0 * Lag2(T, T_Lag12) = 0.0 ^2
+0.2125785899065433: ArrivalDemand(S, T) - ArrivalDemand(S, T_Lag24) + 0.0 * Lag2(T, T_Lag24) = 0.0 ^2
+0.2689986752474285: ArrivalDemand(S, T) - ArrivalDemand(S, T_Lag168) + 0.0 * Lag2(T, T_Lag168) = 0.0 ^2
+0.0228481591843905: ArrivalDemand(S, T) - ArrivalDemand(S, T_Bias) + 0.0 * Lag2(T, T_Bias) = 0.0 ^2
+
+
+#Departure
+0.1408939909682664: DepartureDemand(S, T) - DepartureDemand(S, T_Lag1) + 0.0 * Lag2(T, T_Lag1) = 0.0 ^2
+0.0532288643542477: DepartureDemand(S, T) - DepartureDemand(S, T_Lag2) + 0.0 * Lag2(T, T_Lag2) = 0.0 ^2
+0.0209316100024183: DepartureDemand(S, T) + DepartureDemand(S, T_Lag12) + 0.0 * Lag2(T, T_Lag12) = 0.0 ^2
+0.2148088080578993: DepartureDemand(S, T) - DepartureDemand(S, T_Lag24) + 0.0 * Lag2(T, T_Lag24) = 0.0 ^2
+0.2749814294845009: DepartureDemand(S, T) - DepartureDemand(S, T_Lag168) + 0.0 * Lag2(T, T_Lag168) = 0.0 ^2
+0.0224896991116299: DepartureDemand(S, T) - DepartureDemand(S, T_Bias) + 0.0 * Lag2(T, T_Bias) = 0.0 ^2
+
+
+# Auto-regressive Rules.
+
+
+
+# Spatial Similarity collective rule
+0.001: Nearby(S1, S2) & DepartureDemand(S1, T) & TimeBlock(S2, T) -> DepartureDemand(S2, T) ^2
+0.001: Nearby(S1, S2) & ArrivalDemand(S1, T) & TimeBlock(S2, T) -> ArrivalDemand(S2, T) ^2
+
+# Same cluster rules
+0.001: SameCluster(S1, S2) & DepartureDemand(S1, T) & TimeBlock(S2, T) -> DepartureDemand(S2, T) ^2
+0.001: SameCluster(S1, S2) & ArrivalDemand(S1, T) & TimeBlock(S2, T) -> ArrivalDemand(S2, T) ^2
+
+# Connect departure demand to arrival demand
+0.001: Destination(S1, S2) & DepartureDemand(S1, T) & TimeBlock(S2, T) -> ArrivalDemand(S2, T) ^2
+0.001: Source(S1, S2) & ArrivalDemand(S1, T) & TimeBlock(S2, T) -> DepartureDemand(S2, T) ^2
+
+# Exogenous Factors
+# Raining
+0.01: Raining(S, T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: Raining(S, T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Commute Hours
+0.01: CommuteHour(T) & !IsWeekend(T) & TimeBlock(S, T) -> DepartureDemand(S, T) ^2
+0.01: CommuteHour(T) & !IsWeekend(T) & TimeBlock(S, T) -> ArrivalDemand(S, T) ^2
+
+0.01: !CommuteHour(T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: !CommuteHour(T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Weekend
+0.01: IsWeekend(T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: IsWeekend(T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Negative prior
+0.001: !DepartureDemand(S, T)
+0.001: !ArrivalDemand(S, T)

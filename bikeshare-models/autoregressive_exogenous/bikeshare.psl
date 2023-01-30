@@ -1,0 +1,14 @@
+# Raining
+0.01: Raining(S, T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: Raining(S, T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Commute Hours
+0.01: CommuteHour(T) & !IsWeekend(T) & TimeBlock(S, T) -> DepartureDemand(S, T) ^2
+0.01: CommuteHour(T) & !IsWeekend(T) & TimeBlock(S, T) -> ArrivalDemand(S, T) ^2
+
+0.01: !CommuteHour(T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: !CommuteHour(T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Weekend
+0.01: IsWeekend(T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: IsWeekend(T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2

@@ -1,0 +1,11 @@
+# Auto-regressive Rules
+
+
+# Collective
+# Same cluster rules
+0.001: SameCluster(S1, S2) & DepartureDemand(S1, T) & TimeBlock(S2, T) -> DepartureDemand(S2, T) ^2
+0.001: SameCluster(S1, S2) & ArrivalDemand(S1, T) & TimeBlock(S2, T) -> ArrivalDemand(S2, T) ^2
+
+# Negative prior
+0.001: !DepartureDemand(S, T)
+0.001: !ArrivalDemand(S, T)

@@ -1,0 +1,34 @@
+# Auto-regressive Rules.
+
+
+# Spatial Similarity collective rule
+0.001: Nearby(S1, S2) & DepartureDemand(S1, T) & TimeBlock(S2, T) -> DepartureDemand(S2, T) ^2
+0.001: Nearby(S1, S2) & ArrivalDemand(S1, T) & TimeBlock(S2, T) -> ArrivalDemand(S2, T) ^2
+
+# Same cluster rules
+0.001: SameCluster(S1, S2) & DepartureDemand(S1, T) & TimeBlock(S2, T) -> DepartureDemand(S2, T) ^2
+0.001: SameCluster(S1, S2) & ArrivalDemand(S1, T) & TimeBlock(S2, T) -> ArrivalDemand(S2, T) ^2
+
+# Connect departure demand to arrival demand
+0.001: Destination(S1, S2) & DepartureDemand(S1, T) & TimeBlock(S2, T) -> ArrivalDemand(S2, T) ^2
+0.001: Source(S1, S2) & ArrivalDemand(S1, T) & TimeBlock(S2, T) -> DepartureDemand(S2, T) ^2
+
+# Exogenous Factors
+# Raining
+0.01: Raining(S, T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: Raining(S, T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Commute Hours
+0.01: CommuteHour(T) & !IsWeekend(T) & TimeBlock(S, T) -> DepartureDemand(S, T) ^2
+0.01: CommuteHour(T) & !IsWeekend(T) & TimeBlock(S, T) -> ArrivalDemand(S, T) ^2
+
+0.01: !CommuteHour(T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: !CommuteHour(T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Weekend
+0.01: IsWeekend(T) & TimeBlock(S, T) -> !DepartureDemand(S, T) ^2
+0.01: IsWeekend(T) & TimeBlock(S, T) -> !ArrivalDemand(S, T) ^2
+
+# Negative prior
+0.001: !DepartureDemand(S, T)
+0.001: !ArrivalDemand(S, T)

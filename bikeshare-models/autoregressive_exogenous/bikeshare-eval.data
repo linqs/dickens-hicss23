@@ -1,0 +1,37 @@
+predicates:
+   DepartureDemand/2: open
+   ArrivalDemand/2: open
+   TimeBlock/2: closed
+   Lag1/2: closed
+   Lag2/2: closed
+   Lag12/2: closed
+   Lag24/2: closed
+   Lag48/2: closed
+   Lag168/2: closed
+   CommuteHour/1: closed
+   IsWeekend/1: closed
+   Station/1: closed
+   Raining/2: closed
+
+observations:
+   DepartureDemand: ../data/bikeshare/eval/000/DepartureDemand_obs.txt
+   ArrivalDemand: ../data/bikeshare/eval/000/ArrivalDemand_obs.txt
+   TimeBlock: ../data/bikeshare/eval/000/TimeBlock_obs.txt
+   Lag1: ../data/bikeshare/eval/000/Lag1_obs.txt
+   Lag2: ../data/bikeshare/eval/000/Lag2_obs.txt
+   Lag12: ../data/bikeshare/eval/000/Lag12_obs.txt
+   Lag24: ../data/bikeshare/eval/000/Lag24_obs.txt
+   Lag48: ../data/bikeshare/eval/000/Lag48_obs.txt
+   Lag168: ../data/bikeshare/eval/000/Lag168_obs.txt
+   CommuteHour: ../data/bikeshare/eval/000/CommuteHour_obs.txt
+   IsWeekend: ../data/bikeshare/eval/000/IsWeekend_obs.txt
+   Station: ../data/bikeshare/eval/000/Station_obs.txt
+   Raining: ../data/bikeshare/eval/000/Raining_obs.txt
+
+targets:
+   DepartureDemand: ../data/bikeshare/eval/000/DepartureDemand_target.txt
+   ArrivalDemand: ../data/bikeshare/eval/000/ArrivalDemand_target.txt
+
+truth:
+   DepartureDemand: ../data/bikeshare/eval/000/DepartureDemand_truth.txt
+   ArrivalDemand: ../data/bikeshare/eval/000/ArrivalDemand_truth.txt

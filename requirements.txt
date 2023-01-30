@@ -1,0 +1,8 @@
+numpy
+pandas
+datetime
+geopy
+pgeocode
+pickle-mixin
+matplotlib
+scikit-learn
